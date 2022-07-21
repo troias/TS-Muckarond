@@ -92,6 +92,59 @@ const literalExample = (s: string, alignment: "left" | "center" | "right") => {
 
 console.log("literal-Example", literalExample("test", "left"))
 
+const literalIntegerExample = (s: string, alignment: 1 | 2 | 3) => {
+    switch (alignment) {
+        case 1:
+            return s.toUpperCase()
+        case 2:
+            return s.toLowerCase()
+        case 3:
+            return s.toUpperCase()
+    }
+}
+
+interface Options {
+    width: number
+}
+
+const measurePenisWidth = (options: Options | "auto") => {
+
+
+    if (typeof options === "string") {
+        return options
+    } else {
+        return options.width * options.width * options.width
+    }
+
+}
+
+const nonNullableExample = (data: string | null) => {
+    if (null) {
+        const defaultValue = "default"
+        return data!.toUpperCase() || defaultValue //! is used to force the null check to fail
+
+
+    }
+    if (data) {
+        // data is not null
+        return data!.toLowerCase()
+    }
+
+
+}
+
+
+
+const padLeftArw = (padding: number | string, input: string): string => {
+    if (typeof padding === "number") {
+        return "   ".repeat(padding) + input
+    } else {
+        return padding + input
+    }
+}
+
+
+
 
 
 export default function TsPractice({ }: Props) {
@@ -124,8 +177,29 @@ export default function TsPractice({ }: Props) {
             </p>
             <div className="test" >
                 Literal Example : {literalExample("test", "left")}
+                Literal Integer Example : {literalIntegerExample("test", 1)}
+            </div>
 
-
+            <div>
+                Measure Pen is : {measurePenisWidth("auto")}
+                <br />
+                Measure Pen is : {measurePenisWidth({ width: 2 })}
+            </div>
+            <div>
+                Non Nullable Example : {nonNullableExample(null)}
+                <br />
+                Non Nullable Example : {nonNullableExample("test")}
+            </div>
+            <div>
+                {/* Pad Left : {padLeft("test", "test")}
+                <br />
+                Pad Left : {padLeft(2, "test")} */}
+                <br />
+                Pad Left : {padLeftArw("test", "test")}
+                <br />
+                Pad Left : {padLeftArw(2, "test")}
+                <br />
+                number : {padLeftArw(2, "example")}
             </div>
 
 
