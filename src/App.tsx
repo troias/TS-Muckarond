@@ -1,10 +1,10 @@
-import React, { useReducer, useRef, useState } from 'react'
-import logo from './logo.svg'
+import { useReducer } from 'react'
+
 import './App.css'
 import Chicken from './models/chicken'
-import { Routes, Route, Link } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import TsPractice from './components/tsPractice'
-import { EmptyStatement } from 'typescript'
+
 import NavBar from './components/navigation/navbar'
 import Home from './pages/homePage'
 import ChickenForm from './components/chicken/chicken-form'
