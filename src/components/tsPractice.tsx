@@ -143,8 +143,28 @@ const padLeftArw = (padding: number | string, input: string): string => {
     }
 }
 
+const checkNullObject = (data: object | null) => {
 
+    if (typeof data === "object") {
+        console.log("data is object", typeof data)
+        return data
+    }
 
+}
+
+console.log("null Checkable", checkNullObject(null))
+console.log("checkArray", checkNullObject([1, 2, 3]))
+console.log("checkObject", checkNullObject({ name: "test" }))
+
+const unionType = (data: string | number) => {
+    if (typeof data === "string") {
+        return data.toUpperCase()
+    } else {
+        return data.toFixed(2)
+    }
+}
+
+console.log("test iN OPERATOR", "name" in { name: "test" })
 
 
 export default function TsPractice({ }: Props) {
@@ -188,7 +208,7 @@ export default function TsPractice({ }: Props) {
             <div>
                 Non Nullable Example : {nonNullableExample(null)}
                 <br />
-                Non Nullable Example : {nonNullableExample("test")}
+                Non Nullable Example: {nonNullableExample("test")}
             </div>
             <div>
                 {/* Pad Left : {padLeft("test", "test")}
@@ -201,6 +221,14 @@ export default function TsPractice({ }: Props) {
                 <br />
                 number : {padLeftArw(2, "example")}
             </div>
+
+            {/* Check Null Object : {checkNullObject(null)}
+            <br />
+            Check Null Object : {checkNullObject({})}
+            <br />
+            Check Null Object : {checkNullObject({ name: "test" })} */}
+
+
 
 
         </div>
