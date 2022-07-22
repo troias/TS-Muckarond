@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { ComponentProps, useEffect, useReducer } from 'react'
 import classes from './tsPractice.module.css'
 
 type Props = {}
@@ -164,10 +164,205 @@ const unionType = (data: string | number) => {
     }
 }
 
+let x = (Math.random()) < 0.5 ? 10 : "hello world!"
+
+const printX = (x: any) => {
+    if (x instanceof Number) {
+        return x.toFixed(2)
+    }
+    if (x instanceof String) {
+        return x.toUpperCase()
+    }
+    return x
+}
+
+
+console.log("Prinx", printX(x))
+
+
+
 console.log("test iN OPERATOR", "name" in { name: "test" })
 
+const instanceOfExample = (data: any) => {
+    if (data instanceof Array) {
+        return data.map((item: any) => typeof item === "string" ? item.toUpperCase() : (item.toFixed(2) + " "))
+    }
+    return data.toUpperCase()
+}
 
-export default function TsPractice({ }: Props) {
+
+
+
+
+class Fish implements Fish {
+    name: string
+    age: number
+    weight: number
+    swim: () => void
+    constructor(name: string, age: number, weight: number) {
+        this.name = name
+        this.age = age
+        this.weight = weight
+        this.swim = () => {
+            return (this.name + " is swimming")
+        }
+    }
+
+}
+
+class Bird implements Bird {
+    name: string
+    age: number
+    weight: number
+    fly: () => void
+    constructor(name: string, age: number, weight: number, fly: () => void) {
+        this.name = name
+        this.age = age
+        this.weight = weight
+        this.fly = () => {
+            return (this.name + " is flying")
+        }
+    }
+}
+
+class Mammal implements Mammal {
+    name: string
+    age: number
+    weight: number
+    constructor(name: string, age: number, weight: number) {
+        this.name = name
+        this.age = age
+        this.weight = weight
+    }
+}
+
+interface Fish {
+    name: string
+    age: number
+    weight: number
+    swim: () => void
+}
+
+interface Bird {
+    name: string
+    age: number
+    weight: number
+    fly: () => void
+}
+
+interface Mammal {
+    name: string
+    age: number
+    weight: number
+}
+
+const testPet = (pet: Fish | Bird | Mammal) => {
+    if (pet instanceof Fish) {
+        return pet.swim()
+    } else if (pet instanceof Bird) {
+        return pet.fly()
+    }
+    return pet.name.toUpperCase()
+}
+
+
+
+const pet1 = new Fish("Fish", 1, 1)
+const pet2 = new Bird("Bird", 1, 1, () => {
+    return "Bird is flying"
+}
+)
+const pet3 = new Mammal("Mammal", 1, 1)
+console.log("pet2", testPet(pet2))
+console.log("pet3", testPet(pet3))
+console.log("testPet", testPet(pet1))
+
+
+const returnFromTestPet = (() => {
+    return testPet(pet1)
+}
+)
+console.log("returnFromTestPet", returnFromTestPet())
+
+
+interface Shape {
+    kind: "circle" | "rectangle"
+    radius: number
+    width: number
+    height: number
+
+}
+
+const drawShape = (shape: Shape) => {
+    switch (shape.kind) {
+        case "circle":
+            return "circle"
+        case "rectangle":
+            return "rectangle"
+    }
+}
+
+const calculateArea = (shape: Shape) => {
+
+    switch (shape.kind) {
+        case "circle":
+            return Math.PI * shape.radius * shape.radius
+        case "rectangle":
+            return shape.width * shape.height
+    }
+}
+
+const fakeFiveCharStringArray = (): string[] => {
+    return ["dove", "capp", "trap", "rekt", "mech"]
+}
+
+const initialState = {
+    wordList: fakeFiveCharStringArray(),
+    currentWord: "",
+    currentWordIndex: 0,
+    currentGuess: "",
+    currentGuessIndex: 0,
+
+
+}
+
+const reducer = (state: any, action: any) => {
+    switch (action.type) {
+        case "SET_WORD":
+            const choseRandomWord = state.wordList[Math.floor(Math.random() * state.wordList.length)]
+            return {
+                ...state,
+                currentWord: choseRandomWord,
+            }
+        case "SET_GUESS":
+            return {
+                ...state,
+                currentGuess: action.payload,
+            }
+        case "CHECK_GUESS":
+            if (state.currentWord[state.currentGuessIndex] === state.currentGuess) {
+                return {
+                    ...state,
+                    currentGuessIndex: state.currentGuessIndex + 1,
+                }
+            }
+            return state
+
+        default: return state
+    }
+
+}
+
+
+
+
+
+
+
+
+const TsPractice: React.FC = ({ }: Props) => {
+
+    const [state, dispatch] = useReducer(reducer, initialState)
 
     useEffect(function () {
         console.log("useEffect")
@@ -221,12 +416,71 @@ export default function TsPractice({ }: Props) {
                 <br />
                 number : {padLeftArw(2, "example")}
             </div>
+            <div>
+                Instance Of Example : {instanceOfExample([1, 2, 3])}
+                <br />
+                {/* Instance Of Example : {instanceOfExample("test")}  */}
+            </div>
+            <div>
+                AssinmentTest : {printX(10)}
+            </div>
 
-            {/* Check Null Object : {checkNullObject(null)}
-            <br />
-            Check Null Object : {checkNullObject({})}
-            <br />
-            Check Null Object : {checkNullObject({ name: "test" })} */}
+            <div>
+                <>
+                    <h1>Fish</h1>
+                    Test pet : {testPet(pet1)}
+                    <h1>Bird</h1>
+                    Bird : {testPet(pet2)}
+                    <h1>Mammal</h1>
+                    Mammal : {testPet(pet3)}
+
+                </>
+
+
+
+            </div>
+            <div>
+                <h1>Shape</h1>
+                drawShape : {drawShape({ kind: "circle", radius: 1, width: 1, height: 1 })}
+                <br />
+                calculateArea : {calculateArea({ kind: "circle", radius: 1, width: 1, height: 1 })}
+            </div>
+
+            <div>
+                <h1>Reducer</h1>
+                <button onClick={() => dispatch({ type: "SET_WORD" })}>Set Word</button>
+                <br />
+                <button onClick={() => dispatch({ type: "SET_GUESS", payload: "test" })}>Set Guess</button>
+                <br />
+                <p>
+                    current Word with 3rd character hidden : {state.currentGuess === state.currentWord ? state.currentWord : state.currentWord.substring(0, 3) + "..."}
+
+                    <p>
+                        box signiling if you guessed charcter right
+                        {state.currentGuess.length > 0 ?
+                            state.currentGuess.split("").map((item: string, index: number) => {
+                                if (item === state.currentWord[index]) {
+                                    return <span className="correct">{item}</span>
+                                }
+                                return <span className="incorrect">{item}</span>
+                            }
+                            ) : "no guess"}
+
+                    </p>
+                    {/* currentWord : {state.currentWord} */}
+                </p>
+                <p>
+                    currentGuess : {state.currentGuess}
+                </p>
+                <input type="text" onChange={(e) => dispatch({ type: "SET_GUESS", payload: e.target.value })} />
+
+                <p>
+                    currentGuessIndex : {state.currentGuessIndex}
+                </p>
+
+
+            </div>
+
 
 
 
@@ -235,3 +489,5 @@ export default function TsPractice({ }: Props) {
 
     )
 }
+
+export default TsPractice

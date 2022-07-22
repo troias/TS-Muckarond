@@ -131,3 +131,22 @@
 
 }
 
+
+.correct {
+  color: #1cd81c;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+ .incorrect {
+  color: #e41717;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
