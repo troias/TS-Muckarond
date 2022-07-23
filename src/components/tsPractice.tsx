@@ -355,8 +355,48 @@ const reducer = (state: any, action: any) => {
 
 
 
+const tsFunctionType = (func: (a: number, b: string) => number) => {
+    return func(1, "test")
+}
+
+const tsGreeter = (func: (a: string) => string) => {
+    return func("test")
+}
+
+const tsGreeter2 = (func: (a: string) => void) => {
+    func("test")
+}
 
 
+type CallSignature = {
+    (a: number): number
+
+
+}
+
+
+const callSigExample = (func: CallSignature) => {
+    return func(1)
+}
+
+
+type Hello = {
+    new(a: string): HelloObj
+}
+
+const hello = (func: Hello) => {
+    return new func("hello")
+}
+
+
+class HelloObj {
+    constructor(public name: string) { }
+    sayHello() {
+        return `Hello ${this.name}`
+    }
+}
+
+console.log("hello", hello(HelloObj))
 
 
 
@@ -479,6 +519,37 @@ const TsPractice: React.FC = ({ }: Props) => {
                 </p>
 
 
+            </div>
+            <div>
+                <h1>TsFunctionType</h1>
+                <p>
+                    tsFunctionType : {tsFunctionType((a: number, b: string) => a + b.length)}
+
+                </p>
+                <p> <>
+
+                    tsGreeter : {tsGreeter((a: string) => a + " " + "greeting")}
+                    <br />
+                    tsGreeter2 : {tsGreeter2((a: string) => a + " " + "greeting")}
+                </>
+                </p>
+
+            </div>
+            <div>
+                <h1>CallSignature</h1>
+                <p>
+                    callSigExample : {callSigExample((a: number) => a + 1)}
+                </p>
+                <p>
+                    <>
+
+                    </>
+
+
+
+
+
+                </p>
             </div>
 
 
