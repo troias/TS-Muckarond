@@ -8,6 +8,8 @@ import TsPractice from './components/tsPractice'
 import NavBar from './components/navigation/navbar'
 import Home from './pages/homePage'
 import ChickenForm from './components/chicken/chicken-form'
+import Tspractice2 from './components/tspractice2'
+
 
 
 type ChickenType = {
@@ -69,6 +71,7 @@ function App() {
         <Route path='/chicken-form' element={<ChickenForm chickenReducer={state} dispatchReducer={dispatch} />} />
         {/* <Route path="/" element={<ChickenDetails />} /> */}
         <Route path="ts" element={<TsPractice />} />
+        <Route path="tspractice2" element={<Tspractice2 />} />
 
 
       </Routes>

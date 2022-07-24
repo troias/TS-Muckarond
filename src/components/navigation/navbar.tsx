@@ -15,6 +15,9 @@ const NavBar = () => {
                     <a href="/ts">TsPractice</a>
                 </li>
                 <li>
+                    <a href="/tspractice2">TsPractice2</a>
+                </li>
+                <li>
                     <a href="/chicken-form">Chicken Form</a>
                 </li>
             </ul>
