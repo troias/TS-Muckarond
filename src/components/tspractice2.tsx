@@ -27,6 +27,73 @@ const containDigitNumberUpperCaseLowerCaseMin8 = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A
 // const notFox = quickFox.match(regex)
 console.log("testPass", containDigitNumberUpperCaseLowerCaseMin8.test("T7@testPass"))
 
+const genericType = <T,>(arg: T[] | undefined) => {
+
+    if (arg) {
+        return arg[0]
+    }
+
+}
+//genericType<string, number>(['test', 1])
+
+const genericTypeExtension = <T extends {
+    name: string
+}>(arg: T) => {
+    return arg
+}
+
+console.log("xtension", genericTypeExtension({ name: 'test' }))
+
+interface Data {
+    postalCodes: string[]
+    country: string
+}
+
+type IOverload = {
+    (postalCodes: string[]): Data
+    (country: string): Data
+}
+
+const overload: IOverload = (arg: any): Data => {
+    if (arg instanceof Array) {
+        return {
+            postalCodes: arg,
+            country: 'test'
+        }
+    } else {
+        return {
+            postalCodes: [],
+            country: arg
+        }
+    }
+}
+
+// let getDataByKey = (data: Data, key: 'postalCodes'): string[]
+// let  getDataByKey = (data: Data, key: 'country'): string
+// let  getDataByKey = (data: Data, key: 'postalCodes' | 'country') => {
+//     return data[key]
+// }
+
+const unlimitedArgsFunction = (a: number, ...args: any[]) => {
+
+    return a + args.reduce((acc, curr) => {
+        return acc + curr
+    }
+        , 0)
+}
+
+type abc = {
+    a: number
+    b: number
+    c: number
+}
+
+const deconstructed = ({ a, b, c }: abc) => {
+    return a + b + c
+}
+
+
+
 
 const Tspractice2 = (props: Props) => {
     return (
@@ -45,6 +112,20 @@ const Tspractice2 = (props: Props) => {
                     <br />
                     <span>{printReturnStr(quickFox, returnStr)}</span>
                     <br />
+                    <span>{genericType(["troias", "bob"])}</span>
+                    <br />
+                    <span>{genericTypeExtension({ name: 'test' }).name}</span>
+                    <br />
+                    <span>{overload(["troias", "bob"]).postalCodes.map(x => " " + x)}</span>
+                    <br />
+                    <span>{overload("test").country.split(/e/g)}</span>
+                    <br />
+                    <span>{unlimitedArgsFunction(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)}</span>
+                    <br />
+                    <span>{deconstructed({ a: 1, b: 2, c: 3 })}</span>
+
+
+
 
 
 
