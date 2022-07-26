@@ -92,6 +92,180 @@ const deconstructed = ({ a, b, c }: abc) => {
     return a + b + c
 }
 
+interface Person {
+    name: string
+    age?: number
+    weight?: number
+    username?: string
+}
+
+type Circle = {
+    radius: number
+    color: string
+
+}
+
+const drawCircle = ({ circle: Circle }: { circle: Circle }) => {
+    return `<circle cx="${Circle.radius}" cy="${Circle.radius}" r="${Circle.radius}" fill="${Circle.color}"/>`
+}
+
+const greet = (person: Person) => {
+    return `Hello ${person.name} you fat ${person.weight}kg and ${(person.username !== undefined) ? `your username is ${person.username}` : ''}`
+}
+
+const greet1 = ({ name, age = 0, weight = 0, username = "John Doe" }: Person) => {
+    return `Hello ${name} you fat ${weight}kg and ${(username !== undefined) ? `your username is ${username}` : ''}`
+}
+
+interface ReadOnly {
+    readonly name: string
+    readonly age: number
+    readonly weight: number
+    readonly username: string
+}
+
+const readOnly: ReadOnly = {
+    name: 'John Doe',
+    age: 30,
+    weight: 70,
+    username: 'jdoe'
+}
+
+type IndexSignature = {
+
+    [index: number]: string | number
+    length: number
+    name: string
+
+
+}
+
+const getArr = (arr: IndexSignature) => {
+    return arr[0]
+}
+
+const myArr = getArr({ length: 1, name: 'test' })
+
+console.log(myArr)
+
+interface BasicAmericanAddress {
+    street: string
+    city: string
+    state: string
+    zip: string
+}
+
+interface AmericanAddress extends BasicAmericanAddress {
+    country: string
+}
+
+
+interface HawaiianAddress extends BasicAmericanAddress {
+    country: string
+    island: string
+}
+
+interface unitedState extends BasicAmericanAddress, AmericanAddress, HawaiianAddress {
+    country: string
+}
+
+const exampleAddress: unitedState = {
+    street: '123 Main St',
+    city: 'Anytown',
+    state: 'California',
+    zip: '12345',
+    country: 'United States',
+    island: 'Hawaii'
+}
+
+interface Name {
+    first: string
+    last: string
+    weight: number
+    username?: string
+
+}
+
+interface Address {
+    street: string
+    city: string
+    state: string
+    zip: string
+}
+
+type intersection = Name & Address
+
+
+const draw = (person: intersection) => {
+    return `Hello ${person.first} ${person.last} you fat ${person.weight}kg and ${(person.username !== undefined) ? `your username is ${person.username}` : ''}`
+}
+
+type Box<T> = {
+    contents: T
+}
+
+const stringBox: Box<string> = {
+    contents: 'test'
+}
+
+const numBox: Box<number> = {
+    contents: 1
+}
+
+type BoxOfOranges = {
+    contents: string
+    isOpen: boolean
+
+}
+
+
+const boxOfOranges: Box<BoxOfOranges> = {
+    contents: {
+        contents: 'test',
+        isOpen: true
+    }
+}
+
+interface Car<T> {
+    name: T
+    year: number
+    color: string
+}
+
+const toyota: Car<string> = {
+    name: 'toyota',
+    year: 2020,
+    color: 'red'
+}
+
+
+type ReadonlyArray<T> = T[] & Readonly<T[]>
+
+
+const readonlyArray: ReadonlyArray<number> = [1, 2, 3]
+
+const addNumsFromArray = (arr: ReadonlyArray<number>) => {
+    return arr.reduce((acc, curr) => {
+        return acc + curr
+    }
+        , 0)
+}
+
+type TupleType = [string, number, boolean]
+
+const exampleTuple: TupleType = ['test', 1, true]
+
+const readTuple = (tuple: TupleType) => {
+    return tuple.map((item) => {
+        return item + " "
+    }
+        , 0)
+}
+
+const destructureTuple = ([first, second, ...third]: TupleType) => {
+    return first + " " + second + " " + third
+}
+
 
 
 
@@ -123,6 +297,28 @@ const Tspractice2 = (props: Props) => {
                     <span>{unlimitedArgsFunction(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)}</span>
                     <br />
                     <span>{deconstructed({ a: 1, b: 2, c: 3 })}</span>
+                    <h1> Object Types</h1>
+                    <span>{greet({ name: 'troy', age: 30, weight: 73, username: "troias" })}</span>
+                    <br />
+                    draw circle <br />
+                    <span>{drawCircle({ circle: { radius: 10, color: 'red' } })}</span>
+                    <br />
+                    read only <br />
+                    <span>{readOnly.name}</span>
+                    <br />
+                    <span> {numBox.contents}</span>
+                    <br />
+                    <span> {stringBox.contents}</span>
+                    <br />
+                    <span>{addNumsFromArray(readonlyArray)}</span>
+
+                    <br />
+                    <span> {readTuple(exampleTuple)}</span>
+                    <br />
+                    <span> {destructureTuple(exampleTuple)}</span>
+
+
+
 
 
 
